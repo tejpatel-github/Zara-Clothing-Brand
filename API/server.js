@@ -9,7 +9,6 @@ const { type } = require("os");
 
 const app = express();
 
-//Connection String
 mongoose.connect(
   "mongodb+srv://tpatel9817:Tsp%400852@cluster0.brcjm0n.mongodb.net/Zara"
 );
