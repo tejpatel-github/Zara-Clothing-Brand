@@ -4,6 +4,8 @@ import Home from "./Components/Home.jsx";
 import Register from "./Components/signup.jsx";
 import AdminLogin from "./Components/Admin/AdminLogin.jsx";
 import AdminDashboard from "./Components/Admin/AsminDash.jsx";
+import Product from "./Components/Product.jsx";
+import ProductDetails from "./Components/ProductDetails.jsx";
 
 
 
@@ -18,6 +20,8 @@ function LinksSetup() {
         <Route path="/login" element={<Register />} />
         <Route path="/AdminLogin" element={<AdminLogin/>} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/Store" element={<Product />} />
+        <Route path="/ProductDetails" element={<ProductDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

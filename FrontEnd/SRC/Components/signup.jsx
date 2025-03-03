@@ -15,7 +15,24 @@ const LoginSignup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (state === "Sign Up" && !formData.username.trim()) {
+      toast.error("Username is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      toast.error("Email is required");
+      return false;
+    }
+    if (!formData.password.trim()) {
+      toast.error("Password is required");
+      return false;
+    }
+    return true;
+  };
+
   const login = async () => {
+    if (!validateForm()) return;
     try {
       const response = await fetch("http://localhost:4000/login", {
         method: "POST",
@@ -34,15 +51,16 @@ const LoginSignup = () => {
           window.location.replace("/");
         }, 2000);
       } else {
-        alert(data.errors);
+        toast.error(data.errors);
       }
     } catch (error) {
       console.error("Login error:", error);
-      alert("Failed to login. Please try again.");
+      toast.error("Failed to login. Please try again.");
     }
   };
 
   const signup = async () => {
+    if (!validateForm()) return;
     try {
       const response = await fetch("http://localhost:4000/signup", {
         method: "POST",
@@ -59,11 +77,11 @@ const LoginSignup = () => {
         loginToast();
         window.location.replace("/");
       } else {
-        alert(data.errors);
+        toast.error(data.errors);
       }
     } catch (error) {
       console.error("Signup error:", error);
-      alert("Failed to signup. Please try again.");
+      toast.error("Failed to signup. Please try again.");
     }
   };
 
@@ -106,17 +124,13 @@ const LoginSignup = () => {
 
         <p className="text-center">
           {state === "Login" ? (
-            <>Create an account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Sign Up")}>Click here</span></>
+            <>Create an account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Sign Up")}>Sign Up</span></>
           ) : (
             <>Already have an account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Login")}>Login here</span></>
           )}
         </p>
-        <p className="text-center mt-2">
-          Admin Login <a href="/Adminlogin" className="text-decoration-none">Click here</a>
-        </p>
       </div>
       <ToastContainer theme="dark" />
-      
     </div>
   );
 };

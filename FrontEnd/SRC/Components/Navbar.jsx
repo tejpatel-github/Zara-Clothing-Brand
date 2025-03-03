@@ -27,7 +27,7 @@ function NavigationBar() {
       <div className="container-fluid">
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <img src={logo} alt="logo" width="40" height="40" className="me-2" />
-          <span>ZARA</span>
+          {/* <span>ZARA</span> */}
         </Link>
         <button
           className="navbar-toggler"

@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import NavigationBar from "./Navbar.jsx";
-import { Buffer } from "buffer";
+import "bootstrap/dist/css/bootstrap.min.css";  // Import Bootstrap CSS
+import "bootstrap/dist/js/bootstrap.bundle.min.js";  // Ensure Bootstrap JS is loaded
+import Footer from "./footer.jsx";
 
 function Home() {
-  
   return (
     <>
       <NavigationBar />
-      <div>
-        <h1 className="center">Home</h1>
-      </div>
+      
+
+      <Footer/>
     </>
   );
 }

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const { type } = require("os");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -126,6 +127,105 @@ app.post("/signup", async (req, res) => {
   const data = {
     user: {
       id: user.id,
+    },
+  };
+
+  const token = jwt.sign(data, "secret_ecom");
+  success = true;
+  res.json({ success, token });
+});
+
+
+
+// Admin Side API
+const Admin = mongoose.model("Admin", {
+  name: {
+    type: String,
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  password: {
+    type: String,
+  },
+  cartData: {
+    type: Object,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+
+// Admin Login
+app.post("/AdminLogin", async (req, res) => {
+  console.log("Login");
+  let success = false;
+  let admin = await Admin.findOne({ email: req.body.email });
+  
+  if (admin) {
+    // Compare hashed password
+    const passCompare = await bcrypt.compare(req.body.password, admin.password);
+    
+    if (passCompare) {
+      const data = {
+        admin: {
+          id: admin.id,
+        },
+      };
+      success = true;
+      console.log(admin.id);
+      const token = jwt.sign(data, "secret_ecom");
+      res.json({ success, token });
+    } else {
+      return res.status(400).json({
+        success: success,
+        errors: "Incorrect email or password",
+      });
+    }
+  } else {
+    return res.status(400).json({
+      success: success,
+      errors: "No user found with this email",
+    });
+  }
+});
+
+// Admin Signup
+app.post("/AdminSignup", async (req, res) => {
+  console.log("Sign Up");
+  let success = false;
+
+  let check = await Admin.findOne({ email: req.body.email });
+  if (check) {
+    return res.status(400).json({
+      success: success,
+      errors: "A user with this email already exists",
+    });
+  }
+
+  // Hash password before saving
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+  let cart = {};
+  for (let i = 0; i < 300; i++) {
+    cart[i] = 0;
+  }
+
+  const admin = new Admin({
+    name: req.body.username,
+    email: req.body.email,
+    password: hashedPassword, // Store hashed password
+    cartData: cart,
+  });
+
+  await admin.save();
+
+  const data = {
+    admin: {
+      id: admin.id,
     },
   };
 
