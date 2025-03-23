@@ -6,6 +6,7 @@ function Footer() {
     <footer className="bg-dark text-white py-4">
       <div className="container">
         <div className="row">
+          {/* Footer Column 1 */}
           <div className="col-md-4">
             <h5>ZARA</h5>
             <ul className="list-unstyled">
@@ -16,13 +17,13 @@ function Footer() {
             </ul>
           </div>
 
-       
+          {/* Footer Column 2 */}
           <div className="col-md-4">
             <h5>Contact</h5>
             <ul className="list-unstyled">
               <li><a href="mailto:info@example.com" className="text-white">Email: tirth@gmail.com</a></li>
               <li><a href="tel:+1234567890" className="text-white">Phone: +1 234 567 890</a></li>
-              <li><a href="#" className="text-white">Kitchener, ON</a></li>
+              <li><a href="#" className="text-white">Address: 123 Main Street, Kitcheners</a></li>
             </ul>
           </div>
 
@@ -38,7 +39,7 @@ function Footer() {
           </div>
         </div>
         <div className="text-center mt-4">
-          <p>&copy; 2025 ZARA. All Rights Reserved.</p>
+          <p>&copy; 2025 Company Name. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

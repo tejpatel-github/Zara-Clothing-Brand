@@ -1,24 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../Assets/logo.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-
 function NavigationBar() {
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
     window.location.replace("/");
   };
 
-  // Manually toggle navbar when clicking the button
+  
   const toggleNavbar = () => {
     const navbar = document.getElementById("navbarNav");
     if (navbar.classList.contains("show")) {
       navbar.classList.remove("show");
     } else {
       navbar.classList.add("show");
+    }
+  };
+
+  // Check if the user is logged in before navigating
+  const checkAuthAndNavigate = (path) => {
+    if (localStorage.getItem("auth-token")) {
+      navigate(path);
+    } else {
+      alert("Please login first!");
+      navigate("/login");
     }
   };
 
@@ -32,7 +43,7 @@ function NavigationBar() {
         <button
           className="navbar-toggler"
           type="button"
-          onClick={toggleNavbar} // Manually toggle navbar
+          onClick={toggleNavbar}
         >
           <i className="fas fa-bars"></i>
         </button>
@@ -42,23 +53,47 @@ function NavigationBar() {
               <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/Store">Store</Link>
+              <a
+                className="nav-link btn btn-link"
+               href="/Store"
+              >
+                Store
+              </a>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/wishlist">Wishlist</Link>
+              <button
+                className="nav-link btn btn-link"
+                onClick={() => checkAuthAndNavigate("/wishlist")}
+              >
+                Wishlist
+              </button>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/Cart">Cart</Link>
+              <button
+                className="nav-link btn btn-link"
+                onClick={() => checkAuthAndNavigate("/cart")}
+              >
+                Cart
+              </button>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/OrderPage">Order</Link>
+              <button
+                className="nav-link btn btn-link"
+                onClick={() => checkAuthAndNavigate("/order")}
+              >
+                Order
+              </button>
             </li>
           </ul>
           <div className="d-flex">
             {localStorage.getItem("auth-token") ? (
-              <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+              <button className="btn btn-outline-danger" onClick={handleLogout}>
+                Logout
+              </button>
             ) : (
-              <Link to="/login" className="btn btn-outline-primary">Login</Link>
+              <Link to="/login" className="btn btn-outline-primary">
+                Login
+              </Link>
             )}
           </div>
         </div>

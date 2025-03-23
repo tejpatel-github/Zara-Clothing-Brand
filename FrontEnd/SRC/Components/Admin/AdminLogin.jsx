@@ -24,6 +24,14 @@ const AdminLogin = () => {
       toast.error("Email is required");
       return false;
     }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+          toast.error("Invalid email format");
+          return false;
+        }
+
+        
     if (!formData.password.trim()) {
       toast.error("Password is required");
       return false;

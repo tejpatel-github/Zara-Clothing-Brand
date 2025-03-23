@@ -1,75 +1,82 @@
-import React from "react";
-import { Container, Row, Col, Card, Table } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Table } from 'react-bootstrap';
+import axios from 'axios';
+import AdminNav from "./AdminNav.jsx";
 
 const AdminDashboard = () => {
+  
+
   return (
+    <>
+    <AdminNav/>
     <Container fluid>
       <Row>
-        <Col md={10} className="p-4">
-          <h3>Dashboard</h3>
-          <Row>
-            <Col md={4}>
-              <Card className="mb-3 shadow">
+        <Col md={12} className='p-4'>
+          <h3 className='text-center mb-4'>Admin Dashboard</h3>
+          <Row className='g-4'>
+            <Col md={3}>
+              <Card className='shadow'>
                 <Card.Body>
                   <h5>Total Orders</h5>
-                  <h3>1,234</h3>
+                  <h3>{totalOrders || 0}</h3>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={4}>
-              <Card className="mb-3 shadow">
+            <Col md={3}>
+              <Card className='shadow'>
                 <Card.Body>
                   <h5>Total Revenue</h5>
-                  <h3>$56,789</h3>
+                  <h3>${totalRevenue || 0}</h3>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={4}>
-              <Card className="mb-3 shadow">
+            <Col md={3}>
+              <Card className='shadow'>
                 <Card.Body>
-                  <h5>Users</h5>
-                  <h3>5,678</h3>
+                  <h5>Total Returns</h5>
+                  <h3>{totalReturns || 0}</h3>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={3}>
+              <Card className='shadow'>
+                <Card.Body>
+                  <h5>Total Users</h5>
+                  <h3>{totalUsers || 0}</h3>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
 
-          {/* Recent Orders Table */}
-          <Card className="shadow">
+          <Card className='shadow mt-4'>
             <Card.Body>
               <h5>Recent Orders</h5>
-              <Table striped bordered hover>
+              <Table striped bordered hover responsive>
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>Customer</th>
                     <th>Product</th>
                     <th>Amount</th>
-                    <th>Status</th>
+                    <th>Quantity</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Tirth</td>
-                    <td>Hoodie</td>
-                    <td>$45</td>
-                    <td>Shipped</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Tej</td>
-                    <td>Jacket</td>
-                    <td>$85</td>
-                    <td>Processing</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Rohit</td>
-                    <td>T-Shirt</td>
-                    <td>$25</td>
-                    <td>Delivered</td>
-                  </tr>
+                  {recentOrders.length > 0 ? (
+                    recentOrders.map((order, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{order.name}</td>
+                        <td>{order.items.map(item => item.productName).join(", ")}</td>
+                        <td>${order.totalPrice}</td>
+                        <td>{order.totalItems}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5">No recent orders found</td>
+                    </tr>
+                  )}
                 </tbody>
               </Table>
             </Card.Body>
@@ -77,6 +84,7 @@ const AdminDashboard = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 };
 

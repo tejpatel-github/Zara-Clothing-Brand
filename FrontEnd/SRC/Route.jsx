@@ -5,9 +5,15 @@ import Register from "./Components/signup.jsx";
 import AdminLogin from "./Components/Admin/AdminLogin.jsx";
 import AdminDashboard from "./Components/Admin/AsminDash.jsx";
 import Product from "./Components/Product.jsx";
+import AdminManage from "./Components/Admin/AdminManage.jsx";
 import ProductDetails from "./Components/ProductDetails.jsx";
-
-
+import AdminProduct from "./Components/Admin/AdminProduct.jsx";
+import UpdateItem from "./Components/Admin/UpdateItem.jsx";
+import ReturnOrderPage from "./Components/Admin/AdminReturn.jsx";
+import Cart from "./Components/Cart.jsx";
+import Wishlist from "./Components/wishlist.jsx";
+import Order from "./Components/Order.jsx";
+import Checkout from "./Components/Checkout.jsx";
 
 
 const NotFound = () => <h1>Error 404!</h1>; 
@@ -21,7 +27,17 @@ function LinksSetup() {
         <Route path="/AdminLogin" element={<AdminLogin/>} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/Store" element={<Product />} />
-        <Route path="/ProductDetails" element={<ProductDetails />} />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
+        <Route path="/AdminManage" element={<AdminManage />} />
+        <Route path="/AdminProduct" element={<AdminProduct/>} />
+        <Route path="/UpdateItem" element={<UpdateItem/>} />
+        <Route path="/AdminReturn" element={<ReturnOrderPage/>} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/wishlist" element= {<Wishlist/>} />
+        <Route path="/Order" element={<Order/>} />
+        <Route path="/checkout" element={<Checkout/>} />
+
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

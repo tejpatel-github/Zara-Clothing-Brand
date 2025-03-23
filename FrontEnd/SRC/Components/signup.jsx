@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NavigationBar from "./Navbar.jsx";
 
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
@@ -24,12 +25,20 @@ const LoginSignup = () => {
       toast.error("Email is required");
       return false;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Invalid email format");
+      return false;
+    }
+    
     if (!formData.password.trim()) {
       toast.error("Password is required");
       return false;
     }
     return true;
   };
+  
 
   const login = async () => {
     if (!validateForm()) return;
@@ -59,6 +68,10 @@ const LoginSignup = () => {
     }
   };
 
+
+  
+
+
   const signup = async () => {
     if (!validateForm()) return;
     try {
@@ -86,6 +99,8 @@ const LoginSignup = () => {
   };
 
   return (
+    <>
+    <NavigationBar/>
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 shadow-lg" style={{ width: "400px" }}>
         <h2 className="text-center mb-4">{state}</h2>
@@ -107,6 +122,7 @@ const LoginSignup = () => {
             name="email"
             value={formData.email}
             onChange={changeHandler}
+            required
           />
           <input
             type="password"
@@ -119,7 +135,7 @@ const LoginSignup = () => {
         </div>
 
         <button className="btn btn-primary w-100 mb-3" onClick={() => (state === "Login" ? login() : signup())}>
-          Continue
+          {state}
         </button>
 
         <p className="text-center">
@@ -132,6 +148,7 @@ const LoginSignup = () => {
       </div>
       <ToastContainer theme="dark" />
     </div>
+    </>
   );
 };
 
