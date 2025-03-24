@@ -5,12 +5,11 @@ import { Container, Form, Button, Accordion, Card } from "react-bootstrap";
 import axios from "axios";
 
 function Checkout() {
- 
 
   return (
     <>
       <NavigationBar />
-     
+      
     </>
   );
 }

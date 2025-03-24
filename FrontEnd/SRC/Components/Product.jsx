@@ -10,7 +10,7 @@ function Store() {
   return (
     <>
       <NavigationBar />
-     
+      
     </>
   );
 }
