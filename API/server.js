@@ -11,10 +11,14 @@ const bcrypt = require("bcryptjs");
 const app = express();
 
 mongoose.connect(
-  ""
+  "mongodb+srv://tpatel9817:Tsp%400852@cluster0.brcjm0n.mongodb.net/Zara"
 );
 
 
+// app.use(express.json());
+
+
+// app.use(cors());
 app.use(cors({
   origin: 'http://localhost:5000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -162,6 +166,9 @@ const Admin = mongoose.model("Admin", {
     type: Date,
     default: Date.now,
   },
+  userType: {
+    type: String,
+  },
 });
 
 
@@ -170,11 +177,19 @@ app.post("/AdminLogin", async (req, res) => {
   console.log("Login");
   let success = false;
   let admin = await Admin.findOne({ email: req.body.email });
-  
+
   if (admin) {
+    // Check if userType is "Admin"
+    if (admin.userType !== "Admin") {
+      return res.status(403).json({
+        success: success,
+        errors: "Unauthorized: Not an admin user",
+      });
+    }
+
     // Compare hashed password
     const passCompare = await bcrypt.compare(req.body.password, admin.password);
-    
+
     if (passCompare) {
       const data = {
         admin: {
@@ -182,7 +197,6 @@ app.post("/AdminLogin", async (req, res) => {
         },
       };
       success = true;
-      console.log(admin.id);
       const token = jwt.sign(data, "secret_ecom");
       res.json({ success, token });
     } else {
@@ -198,6 +212,8 @@ app.post("/AdminLogin", async (req, res) => {
     });
   }
 });
+
+
 
 // Admin Signup
 app.post("/AdminSignup", async (req, res) => {
@@ -225,6 +241,7 @@ app.post("/AdminSignup", async (req, res) => {
     email: req.body.email,
     password: hashedPassword, // Store hashed password
     cartData: cart,
+    userType: "Admin",
   });
 
   await admin.save();
@@ -241,7 +258,136 @@ app.post("/AdminSignup", async (req, res) => {
 });
 
 
-//Cart
+
+// API for Products
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+const Schema = mongoose.Schema;
+
+const itemSchema = new Schema({
+  productName: String,
+  productPrice: Number,
+  category: String,
+  image: Buffer,
+  imageType: String,
+  ProductDetails: String,
+});
+
+const Item = mongoose.model("Item", itemSchema);
+
+
+
+// API endpoint for uploading an item
+app.post("/api/upload", upload.single("image"), async (req, res) => {
+  try {
+    const newItem = new Item({
+      productName: req.body.productName,
+      productPrice: req.body.productPrice,
+      category: req.body.category,
+      ProductDetails: req.body.ProductDetails,
+      image: req.file.buffer,
+      imageType: req.file.mimetype,
+    });
+
+    await newItem.save();
+
+    res.status(201).json({ message: "Item created successfully", newItem });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API endpoint for getting all items
+app.get("/api/items", async (req, res) => {
+  try {
+    const items = await Item.find();
+    res.status(200).json(items);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API endpoint for updating an item
+app.put("/api/items/:id", upload.single("image"), async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const updateData = {
+      productName: req.body.productName,
+      productPrice: req.body.productPrice,
+      category: req.body.category,
+    };
+
+    if (req.file) {
+      updateData.image = req.file.buffer;
+      updateData.imageType = req.file.mimetype;
+    }
+
+    const updatedItem = await Item.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updatedItem) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    res.status(200).json({ message: "Item updated successfully", updatedItem });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// API endpoint for deleting an item
+app.delete("/api/items/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedItem = await Item.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    res.status(200).json({ message: "Item deleted successfully", deletedItem });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+app.get("/api/items/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const item = await Item.findById(id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+    res.status(200).json(item);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+app.get('/api/items/home', async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 0; // Default to 0 if not specified
+    const items = await Item.find().limit(limit);
+    res.json(items);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch items' });
+  }
+});
+
+
+// Add to cart
 const CartItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
@@ -710,8 +856,3 @@ app.get('/user/:email', async (req, res) => {
     console.log("Error fetching user:", error);
   }
 });
-
-
-
-
-

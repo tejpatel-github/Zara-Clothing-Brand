@@ -101,6 +101,7 @@ const Order = () => {
                 <th>Product Name</th>
                 <th>Product Price</th>
                 <th>Status</th>
+                <th>Return Requested</th>
                 <th>Request for Return</th>
               </tr>
             </thead>
@@ -111,7 +112,8 @@ const Order = () => {
                     <tr>
                       <td>{order.items.map(item => `${item.productName}, Quantity: ${item.quantity}`).join(', ')}</td>
                       <td>${order.items.reduce((sum, item) => sum + item.price * item.quantity, 0)}</td>
-                      <td>{order.returnRequested ? "Return Pending" : "Order Placed"}</td>
+                      <td>{order.status}</td>
+                      <td>{order.returnRequested ? "Return Pending" : "Not Requested"}</td>
                       <td>
                         <Button
                           variant={order.returnRequested ? "secondary" : "primary"}

@@ -24,12 +24,19 @@ function Cart() {
   };
 
   useEffect(() => {
-    if (!checkLogin()) return;
+    const storedEmail = localStorage.getItem('user-email');
+    if (!storedEmail) {
+      alert("Please log in first.");
+      navigate('/login');
+      return;
+    }
+    setUserEmail(storedEmail);
 
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/cart?email=${userEmail}`);
-        setCartItems(response.data);
+        const response = await axios.get(`http://localhost:4000/api/cart?email=${storedEmail}`);
+        const items = Array.isArray(response.data) ? response.data : [response.data];
+        setCartItems(items);
       } catch (error) {
         console.error("There was an error fetching the cart items!", error.response || error.message);
         setError("Failed to fetch cart items");
@@ -37,7 +44,7 @@ function Cart() {
     };
 
     fetchCartItems();
-  }, [userEmail]);
+  }, []);
 
   const handleQuantityChange = async (item, quantity) => {
     if (!checkLogin() || quantity < 1) return;

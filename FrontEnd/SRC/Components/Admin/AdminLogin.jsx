@@ -126,10 +126,10 @@ const AdminLogin = () => {
           />
         </div>
 
-        <button className="btn btn-primary w-100 mb-3" onClick={() => (state === "Admin Login" ? login() : signup())}>
-          Continue
-        </button>
 
+        <button className="btn btn-primary w-100 mb-3" onClick={() => (state === "Admin Login" ? login() : signup())}>
+          {state === "Admin Login" ? "Login" : "Sign Up"}
+        </button>
         <p className="text-center">
           {state === "Admin Login" ? (
             <>Create an Admin account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Admin Sign Up")}>Sign Up</span></>

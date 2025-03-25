@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "./Assets/logo.jpg";
+import axios from "axios"; // Import axios
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function AdminNav() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
     window.location.replace("/");
   };
 
- 
   const checkAuthAndNavigate = (path) => {
     if (localStorage.getItem("auth-token")) {
       navigate(path);
@@ -23,10 +25,30 @@ function AdminNav() {
     }
   };
 
- 
   const toggleNavbar = () => {
     const navbar = document.getElementById("navbarNav");
     navbar.classList.toggle("show");
+  };
+
+  // Handle Admin Login
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:4000/AdminLogin", {
+        email,
+        password
+      });
+
+      if (response.data.success) {
+        // Store token in localStorage
+        localStorage.setItem("auth-token", response.data.token);
+        navigate("/admin");
+      } else {
+        alert("Login failed: " + response.data.errors);
+      }
+    } catch (error) {
+      console.error("There was an error during login:", error);
+      alert("An error occurred during login. Please try again.");
+    }
   };
 
   return (
