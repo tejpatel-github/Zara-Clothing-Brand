@@ -14,6 +14,7 @@ mongoose.connect(
   ""
 );
 
+
 app.use(cors({
   origin: 'http://localhost:5000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -240,9 +241,7 @@ app.post("/AdminSignup", async (req, res) => {
 });
 
 
-
-
-// Add to cart
+//Cart
 const CartItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
@@ -335,7 +334,6 @@ app.get('/user/:email', async (req, res) => {
 });
 
 
-
 const orderSchema = new Schema({
   userEmail: String,
   items: [{
@@ -363,6 +361,9 @@ const Order = mongoose.model('Order', orderSchema);
 
 
 
+
+
+
 // Fetch Orders by Email Endpoint
 app.get('/api/order', async (req, res) => {
   const { userEmail } = req.query;
@@ -378,6 +379,8 @@ app.get('/api/order', async (req, res) => {
 
 
 
+
+
 app.get('/api/orders', async (req, res) => {
   try {
     const orders = await Order.find();
@@ -386,6 +389,8 @@ app.get('/api/orders', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
 
 
 
@@ -454,7 +459,6 @@ app.post('/api/orders', async (req, res) => {
 });
 
 
-
 app.delete('/api/cart', async (req, res) => {
   const { email } = req.query;
 
@@ -478,7 +482,7 @@ app.delete('/api/cart', async (req, res) => {
 });
 
 
-//Return Orders
+
 const returnOrderSchema = new mongoose.Schema({
   orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
   productName: { type: String, required: true },
@@ -562,9 +566,150 @@ app.put('/api/return-order/:id/status', async (req, res) => {
 
 
 
+// Admin Dashboard
+// API endpoint to get total revenue
+app.get('/api/total-revenue', async (req, res) => {
+  try {
+    const totalRevenue = await Order.aggregate([
+      { $group: { _id: null, totalRevenue: { $sum: "$totalPrice" } } }
+    ]);
+    res.json({ totalRevenue: totalRevenue[0].totalRevenue });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch total revenue" });
+  }
+});
+
+// API endpoint to get total orders
+app.get('/api/total-orders', async (req, res) => {
+  try {
+    const totalOrders = await Order.countDocuments();
+    res.json({ totalOrders });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch total orders" });
+  }
+});
+
+// API endpoint to get total returns
+app.get('/api/total-returns', async (req, res) => {
+  try {
+    const totalReturns = await ReturnOrder.countDocuments();
+    res.json({ totalReturns });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch total returns" });
+  }
+});
+
+// API endpoint to get total users
+app.get('/api/total-users', async (req, res) => {
+  try {
+    const totalUsers = await Users.countDocuments();
+    res.json({ totalUsers });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch total users" });
+  }
+});
+
+
+// wishlist
+const wishlistItemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+  size: {type: String, required: true },
+  quantity: { type: Number, required: true },
+  email: { type: String, required: true },
+  image: { type: Buffer },
+  imageType: { type: String }
+});
+
+
+const wishlistItem = mongoose.model("wishlistItem", wishlistItemSchema);
+
+app.get('/api/wishlist', async (req, res) => {
+  const { email } = req.query;
+  try {
+    const wishlistItems = await wishlistItem.find({ email });
+    res.status(200).json(wishlistItems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 
 
+app.delete('/api/wishlist', async (req, res) => {
+  const { email } = req.body;
+  try {
+    const result = await wishlistItem.deleteMany({ email });
+    res.status(200).json({ message: `${result.deletedCount} items deleted.` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+app.post("/api/wishlist", async (req, res) => {
+  const { name, price, size, quantity, email, image, imageType } = req.body;
+  try {
+    const newWishlistItem = new wishlistItem({ name, price, quantity, size, email, image, imageType });
+    await newWishlistItem.save();
+    res.status(201).json(newWishlistItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+
+
+app.put("/api/wishlist/:id", async (req, res) => {
+  const { id } = req.params;
+  const { quantity } = req.body;
+  try {
+    const updatedItem = await wishlistItem.findByIdAndUpdate(id, { quantity }, { new: true });
+    res.status(200).json(updatedItem);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+app.delete('/api/wishlist/:id', async (req, res) => {
+  try {
+    const result = await wishlistItem.findByIdAndDelete(req.params.id);
+    if (result) {
+      res.status(200).json({ message: "Item deleted successfully" });
+    } else {
+      res.status(404).json({ message: "Item not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+app.get('/user/:email', async (req, res) => {
+  try {
+    const user = await Users.findOne({ email: req.params.email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user', error });
+    console.log("Error fetching user:", error);
+  }
+});
 
 
 
