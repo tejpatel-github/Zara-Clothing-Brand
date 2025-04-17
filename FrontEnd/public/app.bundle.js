@@ -114,7 +114,7 @@ var AdminLogin = function AdminLogin() {
           case 2:
             _context.prev = 2;
             _context.next = 5;
-            return fetch("http://localhost:4000/AdminLogin", {
+            return fetch("https://zara-clothing-brand-backend.onrender.com/AdminLogin", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -168,7 +168,7 @@ var AdminLogin = function AdminLogin() {
           case 2:
             _context2.prev = 2;
             _context2.next = 5;
-            return fetch("http://localhost:4000/AdminSignup", {
+            return fetch("https://zara-clothing-brand-backend.onrender.com/AdminSignup", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -317,7 +317,7 @@ function AdminManage() {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get("http://localhost:4000/api/orders");
+              return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get("https://zara-clothing-brand-backend.onrender.com/api/orders");
             case 3:
               response = _context.sent;
               console.log(response.data);
@@ -358,7 +358,7 @@ function AdminManage() {
             setOrders(updatedOrders);
             _context2.prev = 3;
             _context2.next = 6;
-            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("http://localhost:4000/api/orders/".concat(orderId), {
+            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("https://zara-clothing-brand-backend.onrender.com/api/orders/".concat(orderId), {
               status: updatedStatus
             });
           case 6:
@@ -495,7 +495,7 @@ function AdminNav() {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].post("http://localhost:4000/AdminLogin", {
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].post("https://zara-clothing-brand-backend.onrender.com/AdminLogin", {
               email: email,
               password: password
             });
@@ -650,7 +650,7 @@ var ItemList = function ItemList() {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_5__["default"].get('http://localhost:4000/api/items');
+            return axios__WEBPACK_IMPORTED_MODULE_5__["default"].get('https://zara-clothing-brand-backend.onrender.com/api/items');
           case 3:
             response = _context.sent;
             setItems(response.data);
@@ -677,7 +677,7 @@ var ItemList = function ItemList() {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_5__["default"].delete("http://localhost:4000/api/items/".concat(id));
+            return axios__WEBPACK_IMPORTED_MODULE_5__["default"].delete("https://zara-clothing-brand-backend.onrender.com/api/items/".concat(id));
           case 3:
             fetchItems();
             _context2.next = 9;
@@ -722,7 +722,7 @@ var ItemList = function ItemList() {
             formData = new FormData(e.target);
             _context3.prev = 2;
             _context3.next = 5;
-            return axios__WEBPACK_IMPORTED_MODULE_5__["default"].post('http://localhost:4000/api/upload', formData);
+            return axios__WEBPACK_IMPORTED_MODULE_5__["default"].post('https://zara-clothing-brand-backend.onrender.com/api/upload', formData);
           case 5:
             fetchItems();
             handleCloseModal();
@@ -918,7 +918,7 @@ var ReturnOrderPage = function ReturnOrderPage() {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get('http://localhost:4000/api/return-orders');
+              return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get('https://zara-clothing-brand-backend.onrender.com/api/return-orders');
             case 3:
               response = _context.sent;
               setReturnOrders(response.data);
@@ -952,7 +952,7 @@ var ReturnOrderPage = function ReturnOrderPage() {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("http://localhost:4000/api/return-order/".concat(id, "/status"), {
+            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("https://zara-clothing-brand-backend.onrender.com/api/return-order/".concat(id, "/status"), {
               status: status
             });
           case 3:
@@ -1085,7 +1085,7 @@ var AdminDashboard = function AdminDashboard() {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get('http://localhost:4000/api/orders');
+              return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get('https://zara-clothing-brand-backend.onrender.com/api/orders');
             case 3:
               response = _context.sent;
               console.log(response.data);
@@ -1128,7 +1128,7 @@ var AdminDashboard = function AdminDashboard() {
             setOrders(updatedOrders);
             _context2.prev = 3;
             _context2.next = 6;
-            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("http://localhost:4000/api/orders/".concat(orderId), {
+            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("https://zara-clothing-brand-backend.onrender.com/api/orders/".concat(orderId), {
               status: updatedStatus
             });
           case 6:
@@ -1158,7 +1158,7 @@ var AdminDashboard = function AdminDashboard() {
             case 0:
               _context3.prev = 0;
               _context3.next = 3;
-              return fetch('http://localhost:4000/api/total-revenue');
+              return fetch('https://zara-clothing-brand-backend.onrender.com/api/total-revenue');
             case 3:
               revenueResponse = _context3.sent;
               _context3.next = 6;
@@ -1167,7 +1167,7 @@ var AdminDashboard = function AdminDashboard() {
               revenueData = _context3.sent;
               setTotalRevenue(revenueData.totalRevenue);
               _context3.next = 10;
-              return fetch('http://localhost:4000/api/total-orders');
+              return fetch('https://zara-clothing-brand-backend.onrender.com/api/total-orders');
             case 10:
               ordersResponse = _context3.sent;
               _context3.next = 13;
@@ -1176,7 +1176,7 @@ var AdminDashboard = function AdminDashboard() {
               ordersData = _context3.sent;
               setTotalOrders(ordersData.totalOrders);
               _context3.next = 17;
-              return fetch('http://localhost:4000/api/total-returns');
+              return fetch('https://zara-clothing-brand-backend.onrender.com/api/total-returns');
             case 17:
               returnsResponse = _context3.sent;
               _context3.next = 20;
@@ -1185,7 +1185,7 @@ var AdminDashboard = function AdminDashboard() {
               returnsData = _context3.sent;
               setTotalReturns(returnsData.totalReturns);
               _context3.next = 24;
-              return fetch('http://localhost:4000/api/total-users');
+              return fetch('https://zara-clothing-brand-backend.onrender.com/api/total-users');
             case 24:
               usersResponse = _context3.sent;
               _context3.next = 27;
@@ -1194,7 +1194,7 @@ var AdminDashboard = function AdminDashboard() {
               usersData = _context3.sent;
               setTotalUsers(usersData.totalUsers);
               _context3.next = 31;
-              return fetch('http://localhost:4000/api/orders');
+              return fetch('https://zara-clothing-brand-backend.onrender.com/api/orders');
             case 31:
               recentOrdersResponse = _context3.sent;
               _context3.next = 34;
@@ -1336,7 +1336,7 @@ var UpdateItem = function UpdateItem(_ref) {
             }
             _context.prev = 6;
             _context.next = 9;
-            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("http://localhost:4000/api/items/".concat(item._id), formData, {
+            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].put("https://zara-clothing-brand-backend.onrender.com/api/items/".concat(item._id), formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
@@ -1531,7 +1531,7 @@ function Cart() {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_6__["default"].get("http://localhost:4000/api/cart?email=".concat(storedEmail));
+              return axios__WEBPACK_IMPORTED_MODULE_6__["default"].get("https://zara-clothing-brand-backend.onrender.com/api/cart?email=".concat(storedEmail));
             case 3:
               response = _context.sent;
               items = Array.isArray(response.data) ? response.data : [response.data];
@@ -1572,7 +1572,7 @@ function Cart() {
               quantity: quantity
             });
             _context2.next = 6;
-            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].put("http://localhost:4000/api/cart/".concat(item._id), updatedItem);
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].put("https://zara-clothing-brand-backend.onrender.com/api/cart/".concat(item._id), updatedItem);
           case 6:
             setCartItems(cartItems.map(function (cartItem) {
               return cartItem._id === item._id ? updatedItem : cartItem;
@@ -1607,7 +1607,7 @@ function Cart() {
           case 2:
             _context3.prev = 2;
             _context3.next = 5;
-            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].delete("http://localhost:4000/api/cart/".concat(item._id));
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].delete("https://zara-clothing-brand-backend.onrender.com/api/cart/".concat(item._id));
           case 5:
             setCartItems(cartItems.filter(function (cartItem) {
               return cartItem._id !== item._id;
@@ -1821,7 +1821,7 @@ function Checkout() {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].delete("http://localhost:4000/api/cart", {
+            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].delete("https://zara-clothing-brand-backend.onrender.com/api/cart", {
               data: {
                 email: email
               }
@@ -1944,7 +1944,7 @@ function Checkout() {
               totalPrice: totalPrice
             }, formData);
             _context2.next = 6;
-            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post("http://localhost:4000/api/orders", orderData);
+            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post("https://zara-clothing-brand-backend.onrender.com/api/orders", orderData);
           case 6:
             mail = localStorage.getItem("user-email");
             deleteCartItems(mail);
@@ -2150,7 +2150,7 @@ function FeatureProduct() {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get("http://localhost:4000/api/items");
+            return axios__WEBPACK_IMPORTED_MODULE_2__["default"].get("https://zara-clothing-brand-backend.onrender.com/api/items");
           case 3:
             response = _context.sent;
             if (Array.isArray(response.data)) {
@@ -2521,7 +2521,7 @@ var Order = function Order() {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_3__["default"].get("http://localhost:4000/api/order?userEmail=".concat(email));
+              return axios__WEBPACK_IMPORTED_MODULE_3__["default"].get("https://zara-clothing-brand-backend.onrender.com/api/order?userEmail=".concat(email));
             case 3:
               response = _context.sent;
               setOrders(response.data);
@@ -2561,7 +2561,7 @@ var Order = function Order() {
             });
             returnRequested = !order.returnRequested;
             _context2.next = 5;
-            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].put("http://localhost:4000/api/order/".concat(id, "/return"), {
+            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].put("https://zara-clothing-brand-backend.onrender.com/api/order/".concat(id, "/return"), {
               returnRequested: returnRequested,
               returnReason: order.returnReason
             });
@@ -2597,7 +2597,7 @@ var Order = function Order() {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].put("http://localhost:4000/api/order/".concat(id, "/return"), {
+            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].put("https://zara-clothing-brand-backend.onrender.com/api/order/".concat(id, "/return"), {
               returnRequested: true,
               returnReason: reason // Submit reason
             });
@@ -2782,7 +2782,7 @@ function Store() {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_4__["default"].get("http://localhost:4000/api/items");
+              return axios__WEBPACK_IMPORTED_MODULE_4__["default"].get("https://zara-clothing-brand-backend.onrender.com/api/items");
             case 3:
               response = _context.sent;
               if (Array.isArray(response.data)) {
@@ -2850,7 +2850,7 @@ function Store() {
               size: selectedSize
             };
             _context2.next = 10;
-            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post("http://localhost:4000/api/cart", cartItem);
+            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post("https://zara-clothing-brand-backend.onrender.com/api/cart", cartItem);
           case 10:
             alert("Item added to cart!");
             handleCloseModal();
@@ -2900,7 +2900,7 @@ function Store() {
               size: selectedSize
             };
             _context3.next = 10;
-            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post("http://localhost:4000/api/wishlist", cartItem);
+            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post("https://zara-clothing-brand-backend.onrender.com/api/wishlist", cartItem);
           case 10:
             alert("Item added to wishlist!");
             handleCloseModal();
@@ -3152,7 +3152,7 @@ function Store() {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_3__["default"].get("http://localhost:4000/api/items");
+              return axios__WEBPACK_IMPORTED_MODULE_3__["default"].get("https://zara-clothing-brand-backend.onrender.com/api/items");
             case 3:
               response = _context.sent;
               if (Array.isArray(response.data)) {
@@ -3220,7 +3220,7 @@ function Store() {
               size: selectedSize
             };
             _context2.next = 10;
-            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].post("http://localhost:4000/api/cart", cartItem);
+            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].post("https://zara-clothing-brand-backend.onrender.com/api/cart", cartItem);
           case 10:
             alert("Item added to cart!");
             handleCloseModal();
@@ -3271,7 +3271,7 @@ function Store() {
               size: selectedSize
             };
             _context3.next = 10;
-            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].post("http://localhost:4000/api/wishlist", wishlistItem);
+            return axios__WEBPACK_IMPORTED_MODULE_3__["default"].post("https://zara-clothing-brand-backend.onrender.com/api/wishlist", wishlistItem);
           case 10:
             alert("Item added to wishlist!");
             handleCloseModal();
@@ -3619,7 +3619,7 @@ var LoginSignup = function LoginSignup() {
           case 2:
             _context.prev = 2;
             _context.next = 5;
-            return fetch("http://localhost:4000/login", {
+            return fetch("https://zara-clothing-brand-backend.onrender.com/login", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -3673,7 +3673,7 @@ var LoginSignup = function LoginSignup() {
           case 2:
             _context2.prev = 2;
             _context2.next = 5;
-            return fetch("http://localhost:4000/signup", {
+            return fetch("https://zara-clothing-brand-backend.onrender.com/signup", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -3727,7 +3727,7 @@ var LoginSignup = function LoginSignup() {
           case 4:
             _context3.prev = 4;
             _context3.next = 7;
-            return fetch("http://localhost:4000/forgot-password", {
+            return fetch("https://zara-clothing-brand-backend.onrender.com/forgot-password", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -3961,7 +3961,7 @@ function Wishlist() {
             case 4:
               _context.prev = 4;
               _context.next = 7;
-              return axios__WEBPACK_IMPORTED_MODULE_4__["default"].get("http://localhost:4000/api/wishlist", {
+              return axios__WEBPACK_IMPORTED_MODULE_4__["default"].get("https://zara-clothing-brand-backend.onrender.com/api/wishlist", {
                 params: {
                   email: storedEmail
                 }
@@ -4000,7 +4000,7 @@ function Wishlist() {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].delete("http://localhost:4000/api/wishlist/".concat(itemId));
+            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].delete("https://zara-clothing-brand-backend.onrender.com/api/wishlist/".concat(itemId));
           case 3:
             setWishlistItems(wishlistItems.filter(function (item) {
               return item._id !== itemId;
@@ -4049,7 +4049,7 @@ function Wishlist() {
             };
             _context3.prev = 5;
             _context3.next = 8;
-            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post('http://localhost:4000/api/cart', cartItem);
+            return axios__WEBPACK_IMPORTED_MODULE_4__["default"].post('https://zara-clothing-brand-backend.onrender.com/api/cart', cartItem);
           case 8:
             alert('Item moved to cart successfully!');
             handleRemoveFromWishlist(item._id);
