@@ -53,15 +53,21 @@ function Home() {
       <FeatureProduct/>
 
       <div className="header">
-      <iframe 
-  width="100%" 
-  height="400" 
-  src="https://www.youtube.com/embed/OouUgFMkMD0?autoplay=1&mute=1&loop=1&playlist=OouUgFMkMD0" 
-  title="YouTube video player" 
+        <iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube-nocookie.com/embed/OouUgFMkMD0?autoplay=1&mute=1&loop=1&playlist=OouUgFMkMD0"
+  title="YouTube video player"
   frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   allowFullScreen
-  style={{ display: "block", width: "100%", maxWidth: "100%", margin: "0 0 10px" }}
+  style={{
+    display: "block",
+    width: "100%",
+    maxWidth: "100%",
+    margin: "0 0 10px",
+    border: 0,
+  }}
 ></iframe>
 
 
