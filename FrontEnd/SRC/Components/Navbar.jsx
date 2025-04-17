@@ -10,10 +10,9 @@ function NavigationBar() {
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
-    window.location.replace("/");
+    navigate("/");
   };
 
-  
   const toggleNavbar = () => {
     const navbar = document.getElementById("navbarNav");
     if (navbar.classList.contains("show")) {
@@ -23,7 +22,6 @@ function NavigationBar() {
     }
   };
 
-  // Check if the user is logged in before navigating
   const checkAuthAndNavigate = (path) => {
     if (localStorage.getItem("auth-token")) {
       navigate(path);
@@ -38,11 +36,13 @@ function NavigationBar() {
       <div className="container-fluid">
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <img src={logo} alt="logo" width="40" height="40" className="me-2" />
-          {/* <span>ZARA</span> */}
         </Link>
         <button
           className="navbar-toggler"
           type="button"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
           onClick={toggleNavbar}
         >
           <i className="fas fa-bars"></i>
@@ -53,16 +53,11 @@ function NavigationBar() {
               <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <a
-              className="nav-link"
-               href="/Store"
-              >
-                STORE
-              </a>
+              <Link className="nav-link" to="/store">Store</Link>
             </li>
             <li className="nav-item">
               <button
-                className="nav-link btn btn-link"
+                className="btn btn-link nav-link"
                 onClick={() => checkAuthAndNavigate("/wishlist")}
               >
                 Wishlist
@@ -70,7 +65,7 @@ function NavigationBar() {
             </li>
             <li className="nav-item">
               <button
-                className="nav-link btn btn-link"
+                className="btn btn-link nav-link"
                 onClick={() => checkAuthAndNavigate("/cart")}
               >
                 Cart
@@ -78,7 +73,7 @@ function NavigationBar() {
             </li>
             <li className="nav-item">
               <button
-                className="nav-link btn btn-link"
+                className="btn btn-link nav-link"
                 onClick={() => checkAuthAndNavigate("/order")}
               >
                 Order
