@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import NavigationBar from "./Navbar.jsx";
 import { Button, Table, Form, Spinner, Alert } from 'react-bootstrap';
+import Footer from "./footer.jsx";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -37,7 +38,7 @@ const Order = () => {
       });
 
       setOrders(orders.map(order =>
-        order._id === id ? { ...order, returnRequested, status: 'Pending' } : order
+        order._id === id ? { ...order, returnRequested } : order
       ));
     } catch (err) {
       setError(err.message || 'Failed to update return request.');
@@ -92,7 +93,7 @@ const Order = () => {
   return (
     <>
       <NavigationBar />
-      <div className="container mt-5">
+      <div className="container mt-5" style={{height:"80vh"}}>
         <h2 className="text-center mb-4">Your Orders</h2>
         <div className="table-responsive">
           <Table striped bordered hover>
@@ -101,7 +102,6 @@ const Order = () => {
                 <th>Product Name</th>
                 <th>Product Price</th>
                 <th>Status</th>
-                <th>Return Requested</th>
                 <th>Request for Return</th>
               </tr>
             </thead>
@@ -112,15 +112,14 @@ const Order = () => {
                     <tr>
                       <td>{order.items.map(item => `${item.productName}, Quantity: ${item.quantity}`).join(', ')}</td>
                       <td>${order.items.reduce((sum, item) => sum + item.price * item.quantity, 0)}</td>
-                      <td>{order.status}</td>
-                      <td>{order.returnRequested ? "Return Pending" : "Not Requested"}</td>
+                      <td>{order.status || "Order Placed"}</td>
                       <td>
                         <Button
                           variant={order.returnRequested ? "secondary" : "primary"}
                           size="sm"
                           onClick={() => handleRequestReturn(order._id)}
                         >
-                          {order.returnRequested ? "Request for Return" : "Request Return"}
+                          {order.returnRequested ? "Request for Return" : "Request for Return"}
                         </Button>
                       </td>
                     </tr>
@@ -160,6 +159,8 @@ const Order = () => {
           </Table>
         </div>
       </div>
+      <Footer/>
+
     </>
   );
 };

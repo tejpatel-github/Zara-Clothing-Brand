@@ -3,6 +3,7 @@ import NavigationBar from "./Navbar.jsx";
 import { Container, Row, Col, Form, FormControl, Button, Card, Modal, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import { Buffer } from "buffer";
+import Footer from "./footer.jsx";
 
 function Store() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -98,10 +99,9 @@ function Store() {
       alert("Item added to wishlist!");
       handleCloseModal();
     } catch (error) {
-      console.error("There was an error adding the item to the cart!", error);
-      alert("Failed to add item to cart. Please try again later.");
+      console.error("There was an error adding the item to the wishlist!", error);
+      alert("Failed to add item to wishlist. Please try again later.");
     }
-    
   };
 
   const handleProductClick = (product) => {
@@ -144,7 +144,7 @@ function Store() {
             </Form>
           </Col>
           <Col md={4}>
-            <Form.Group controlId="categoryFilter">
+            <Form.Group style={{marginTop:"10px"}} controlId="categoryFilter">
               <Form.Control as="select" value={selectedCategory} onChange={handleCategoryChange}>
                 <option>All</option>
                 <option>Men</option>
@@ -181,75 +181,66 @@ function Store() {
 
         {/* Product Modal */}
         <Modal show={showProductModal} onHide={handleCloseModal} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>{selectedProduct && selectedProduct.productName}</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {selectedProduct && (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-        {/* Product Image */}
-        <img
-          src={`data:${selectedProduct.imageType};base64,${Buffer.from(selectedProduct.image).toString('base64')}`}
-          alt={selectedProduct.productName}
-          style={{
-            maxWidth: '200px',
-            maxHeight: '200px',
-            borderRadius: '10px',
-            objectFit: 'cover',
-            marginRight: '20px'
-          }}
-        />
-        
-        {/* Product Details */}
-        <div style={{ flex: 1 }}>
-          <p><strong>Category:</strong> {selectedProduct.category}</p>
-          <p><strong>Price:</strong> ${selectedProduct.productPrice}</p>
-          <p><strong>Details:</strong> {selectedProduct.ProductDetails}</p>
-          
-          {/* Size Selection */}
-          <Form.Group>
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ borderRadius: '20px', width: '100%' }}>
-                {selectedSize ? `Size: ${selectedSize}` : "Select Size"}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => handleSizeSelect("S")}>S</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleSizeSelect("M")}>M</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleSizeSelect("L")}>L</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleSizeSelect("XL")}>XL</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Form.Group>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedProduct && selectedProduct.productName}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {selectedProduct && (
+              <div className="row">
+                <div className="col-12 col-md-5 mb-3 text-center">
+                  <img
+                    src={`data:${selectedProduct.imageType};base64,${Buffer.from(selectedProduct.image).toString('base64')}`}
+                    alt={selectedProduct.productName}
+                    style={{
+                      width: '100%',
+                      maxWidth: '200px',
+                      borderRadius: '10px',
+                      objectFit: 'cover'
+                    }}
+                  />
+                </div>
+                <div className="col-12 col-md-7">
+                  <p><strong>Category:</strong> {selectedProduct.category}</p>
+                  <p><strong>Price:</strong> ${selectedProduct.productPrice}</p>
+                  <p><strong>Details:</strong> {selectedProduct.ProductDetails}</p>
 
-          {/* Buttons */}
-          <div style={{ marginTop: '10px', display: 'flex', gap: '10px' }}>
-            <Button 
-              variant="dark" 
-              style={{ flex: 1, borderRadius: '20px' }}
-              onClick={handleAddToCart}
-            >
-              Add to Cart
-            </Button>
-            <Button 
-              variant="outline-dark" 
-              style={{ flex: 1, borderRadius: '20px' }}
-              onClick={handleAddToWishlist}
-            >
-              Add to Wishlist
-            </Button>
-          </div>
-        </div>
-      </div>
-    )}
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={handleCloseModal}>
-      Close
-    </Button>
-  </Modal.Footer>
-</Modal>
+                  <Form.Group>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ borderRadius: '20px', width: '100%' }}>
+                        {selectedSize ? `Size: ${selectedSize}` : "Select Size"}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => handleSizeSelect("S")}>S</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleSizeSelect("M")}>M</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleSizeSelect("L")}>L</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleSizeSelect("XL")}>XL</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Form.Group>
 
+                  <div className="d-flex gap-2 mt-3">
+                    <Button
+                      variant="dark"
+                      style={{ flex: 1, borderRadius: '20px' }}
+                      onClick={handleAddToCart}
+                    >
+                      <i className="fas fa-cart-plus"></i>
+                    </Button>
+                    <Button
+                      variant="outline-dark"
+                      style={{ flex: 1, borderRadius: '20px' }}
+                      onClick={handleAddToWishlist}
+                    >
+                      <i className="far fa-heart"></i>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </Modal.Body>
+        </Modal>
       </Container>
+      <Footer/>
     </>
   );
 }

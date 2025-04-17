@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavigationBar from "./Navbar.jsx";
-import { Container, Form, Button, Accordion, Card } from "react-bootstrap";
+import { Container, Form, Button, Accordion } from "react-bootstrap";
 import axios from "axios";
+import Footer from "./footer.jsx";
 
 function Checkout() {
   const location = useLocation();
@@ -29,71 +30,68 @@ function Checkout() {
       });
       console.log(response.data.message);
     } catch (error) {
-      console.error(
-        "Error deleting cart items:",
-        error.response || error.message
-      );
+      console.error("Error deleting cart items:", error.response || error.message);
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate Name
+    // Name
     if (!formData.name.trim()) {
       newErrors.name = "Name is required.";
     }
 
-    // Validate Phone
+    // Phone (10 digits)
     const phonePattern = /^[0-9]{10}$/;
     if (!formData.phone.trim() || !phonePattern.test(formData.phone)) {
       newErrors.phone = "Phone number must be 10 digits.";
     }
 
-    // Validate Address
+    // Address
     if (!formData.address.trim()) {
       newErrors.address = "Address is required.";
     }
 
-    // Validate Postal Code
-    const postalCodePattern = /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/; // Example for Canadian postal code
-    if (
-      !formData.postalCode.trim() ||
-      !postalCodePattern.test(formData.postalCode)
-    ) {
+    // Postal Code (Canadian)
+    const postalCodePattern = /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
+    if (!formData.postalCode.trim() || !postalCodePattern.test(formData.postalCode)) {
       newErrors.postalCode = "Invalid postal code.";
     }
 
-    // Validate State
+    // State
     if (!formData.state.trim()) {
       newErrors.state = "State is required.";
     }
 
-    // Validate Card Number
+    // Card Number (16 digits)
     const cardNumberPattern = /^\d{16}$/;
-    if (
-      !formData.cardNumber.trim() ||
-      !cardNumberPattern.test(formData.cardNumber)
-    ) {
+    if (!formData.cardNumber.trim() || !cardNumberPattern.test(formData.cardNumber)) {
       newErrors.cardNumber = "Card number must be 16 digits.";
     }
 
-    // Validate Card CVV
+    // CVV (3 digits)
     const cardCVVPattern = /^\d{3}$/;
     if (!formData.cardCVV.trim() || !cardCVVPattern.test(formData.cardCVV)) {
       newErrors.cardCVV = "Card CVV must be 3 digits.";
     }
 
-    // Validate Card Expiry
-    const cardExpiryPattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
-    if (
-      !formData.cardExpiry.trim() ||
-      !cardExpiryPattern.test(formData.cardExpiry)
-    ) {
-      newErrors.cardExpiry = "Card expiry must be in MM/YY format.";
+    // Expiry MM/YY format and future date
+    const expiryPattern = /^(0[1-9]|1[0-2])\/\d{2}$/;
+    if (!formData.cardExpiry.trim() || !expiryPattern.test(formData.cardExpiry)) {
+      newErrors.cardExpiry = "Expiry must be in MM/YY format.";
+    } else {
+      const [month, year] = formData.cardExpiry.split("/").map(Number);
+      const now = new Date();
+      const currentYear = now.getFullYear() % 100;
+      const currentMonth = now.getMonth() + 1;
+
+      if (year < currentYear || (year === currentYear && month < currentMonth)) {
+        newErrors.cardExpiry = "Card expiry must be in the future.";
+      }
     }
 
-    // Validate Card Holder Name
+    // Card Holder Name
     if (!formData.cardHolderName.trim()) {
       newErrors.cardHolderName = "Card holder name is required.";
     }
@@ -108,9 +106,7 @@ function Checkout() {
   };
 
   const handlePlaceOrder = async () => {
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     try {
       const orderData = {
@@ -125,6 +121,7 @@ function Checkout() {
         totalPrice,
         ...formData,
       };
+
       await axios.post("http://localhost:4000/api/orders", orderData);
       const mail = localStorage.getItem("user-email");
       deleteCartItems(mail);
@@ -147,85 +144,69 @@ function Checkout() {
             <Form.Control
               type="text"
               name="name"
-              placeholder="Enter your name"
               value={formData.name}
               onChange={handleInputChange}
               isInvalid={!!errors.name}
+              placeholder="Enter your name"
               required
             />
-            {errors.name && (
-              <Form.Text className="text-danger mt-1">
-                {errors.name}
-              </Form.Text>
-            )}
+            {errors.name && <Form.Text className="text-danger">{errors.name}</Form.Text>}
           </Form.Group>
+
           <Form.Group controlId="formPhone">
             <Form.Label>Phone</Form.Label>
             <Form.Control
               type="tel"
               name="phone"
-              placeholder="Enter your phone number"
               value={formData.phone}
               onChange={handleInputChange}
               isInvalid={!!errors.phone}
+              placeholder="Enter your phone number"
               required
             />
-            {errors.phone && (
-              <Form.Text className="text-danger mt-1">
-                {errors.phone}
-              </Form.Text>
-            )}
+            {errors.phone && <Form.Text className="text-danger">{errors.phone}</Form.Text>}
           </Form.Group>
+
           <Form.Group controlId="formAddress">
             <Form.Label>Address</Form.Label>
             <Form.Control
               type="text"
               name="address"
-              placeholder="Enter your address"
               value={formData.address}
               onChange={handleInputChange}
               isInvalid={!!errors.address}
+              placeholder="Enter your address"
               required
             />
-            {errors.address && (
-              <Form.Text className="text-danger mt-1">
-                {errors.address}
-              </Form.Text>
-            )}
+            {errors.address && <Form.Text className="text-danger">{errors.address}</Form.Text>}
           </Form.Group>
+
           <Form.Group controlId="formPostalCode">
             <Form.Label>Postal Code</Form.Label>
             <Form.Control
               type="text"
               name="postalCode"
-              placeholder="Enter your postal code"
               value={formData.postalCode}
               onChange={handleInputChange}
               isInvalid={!!errors.postalCode}
+              placeholder="Enter your postal code"
               required
             />
-            {errors.postalCode && (
-              <Form.Text className="text-danger mt-1">
-                {errors.postalCode}
-              </Form.Text>
-            )}
+            {errors.postalCode && <Form.Text className="text-danger">{errors.postalCode}</Form.Text>}
           </Form.Group>
+
           <Form.Group controlId="formState">
             <Form.Label>State</Form.Label>
             <Form.Control
               type="text"
               name="state"
-              placeholder="Enter your state"
               value={formData.state}
               onChange={handleInputChange}
               isInvalid={!!errors.state}
+              placeholder="Enter your state"
               required
             />
-            {errors.state && (
-              <Form.Text className="text-danger mt-1">
-                {errors.state}
-              </Form.Text>
-            )}
+            {errors.state && <Form.Text className="text-danger">{errors.state}</Form.Text>}
           </Form.Group>
 
           <Accordion className="my-4">
@@ -237,67 +218,56 @@ function Checkout() {
                   <Form.Control
                     type="text"
                     name="cardNumber"
-                    placeholder="Enter your card number"
                     value={formData.cardNumber}
                     onChange={handleInputChange}
                     isInvalid={!!errors.cardNumber}
+                    placeholder="Enter your card number"
                     required
                   />
-                  {errors.cardNumber && (
-                    <Form.Text className="text-danger mt-1">
-                      {errors.cardNumber}
-                    </Form.Text>
-                  )}
+                  {errors.cardNumber && <Form.Text className="text-danger">{errors.cardNumber}</Form.Text>}
                 </Form.Group>
+
                 <Form.Group controlId="formCardCVV">
                   <Form.Label>Card CVV</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="password"
                     name="cardCVV"
-                    placeholder="Enter your card CVV"
                     value={formData.cardCVV}
                     onChange={handleInputChange}
                     isInvalid={!!errors.cardCVV}
+                    placeholder="***"
                     required
                   />
-                  {errors.cardCVV && (
-                    <Form.Text className="text-danger mt-1">
-                      {errors.cardCVV}
-                    </Form.Text>
-                  )}
+                  {errors.cardCVV && <Form.Text className="text-danger">{errors.cardCVV}</Form.Text>}
                 </Form.Group>
+
                 <Form.Group controlId="formCardExpiry">
-                  <Form.Label>Card Expiry Date</Form.Label>
+                  <Form.Label>Card Expiry</Form.Label>
                   <Form.Control
                     type="text"
                     name="cardExpiry"
-                    placeholder="MM/YY"
                     value={formData.cardExpiry}
                     onChange={handleInputChange}
                     isInvalid={!!errors.cardExpiry}
+                    placeholder="MM/YY"
                     required
                   />
-                  {errors.cardExpiry && (
-                    <Form.Text className="text-danger mt-1">
-                      {errors.cardExpiry}
-                    </Form.Text>
-                  )}
+                  {errors.cardExpiry && <Form.Text className="text-danger">{errors.cardExpiry}</Form.Text>}
                 </Form.Group>
+
                 <Form.Group controlId="formCardHolderName">
                   <Form.Label>Card Holder Name</Form.Label>
                   <Form.Control
                     type="text"
                     name="cardHolderName"
-                    placeholder="Enter the cardholder's name"
                     value={formData.cardHolderName}
                     onChange={handleInputChange}
                     isInvalid={!!errors.cardHolderName}
+                    placeholder="Enter cardholder name"
                     required
                   />
                   {errors.cardHolderName && (
-                    <Form.Text className="text-danger mt-1">
-                      {errors.cardHolderName}
-                    </Form.Text>
+                    <Form.Text className="text-danger">{errors.cardHolderName}</Form.Text>
                   )}
                 </Form.Group>
               </Accordion.Body>
@@ -309,17 +279,17 @@ function Checkout() {
             <Form.Control
               as="textarea"
               rows={5}
-              value={`Total Items: ${totalItems || 0}\nTotal Price: $${
-                totalPrice || 0
-              }`}
               readOnly
+              value={`Total Items: ${totalItems || 0}\nTotal Price: $${totalPrice || 0}`}
             />
           </Form.Group>
-          <Button variant="primary" className="mt-5px" type="button" onClick={handlePlaceOrder}>
+
+          <Button className="mt-4" style={{marginTop: "10px", marginBottom: "15px"}} onClick={handlePlaceOrder}>
             Place Order
           </Button>
         </Form>
       </Container>
+      <Footer />
     </>
   );
 }

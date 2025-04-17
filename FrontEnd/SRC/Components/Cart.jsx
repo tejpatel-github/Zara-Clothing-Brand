@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Buffer } from 'buffer';
 import empty from '../Assets/empty.jpg';
 import { useNavigate } from 'react-router-dom';
+import Footer from './footer.jsx';
+
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -85,7 +87,7 @@ function Cart() {
   return (
     <>
       <NavigationBar />
-      <Container className="mt-4">
+      <Container className="mt-4" style={{ marginBottom:"40px"}}>
         <h2 className="text-center mb-4">🛒 Your Shopping Cart</h2>
         {error && <Alert variant="danger" className="text-center">{error}</Alert>}
         {cartItems.length === 0 ? (
@@ -161,6 +163,7 @@ function Cart() {
           </Row>
         )}
       </Container>
+      <Footer/>
     </>
   );
 }

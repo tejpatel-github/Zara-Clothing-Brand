@@ -3,6 +3,7 @@ import NavigationBar from "./Navbar.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";  // Import Bootstrap CSS
 import "bootstrap/dist/js/bootstrap.bundle.min.js";  // Ensure Bootstrap JS is loaded
 import Footer from "./footer.jsx";
+import FeatureProduct from "./FetureProduct.jsx";
 
 function Home() {
   return (
@@ -49,6 +50,8 @@ function Home() {
         </div>
       </div>
 
+      <FeatureProduct/>
+
       <div className="header">
       <iframe 
   width="100%" 
@@ -65,6 +68,7 @@ function Home() {
 
 
       </div>
+
 
       <Footer/>
     </>

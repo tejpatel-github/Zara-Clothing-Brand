@@ -38,49 +38,53 @@ function AdminManage() {
 
   return (
     <>
-    <AdminNav />
-    <div className="container mt-4">
-      <h2 className="mb-4">Admin - Orders Management</h2>
-      <table className="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer Name</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order._id}>
-              <td>{order._id}</td>
-              <td>{order.name}</td>
-              <td>
-                <select
-                  className="form-select"
-                  value={order.status}
-                  onChange={(e) => handleStatusChange(e, order._id)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Processing">Processing</option>
-                  <option value="Shipped">Shipped</option>
-                  <option value="Delivered">Delivered</option>
-                  <option value="Cancelled">Cancelled</option>
-                </select>
-              </td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => alert("Order updated successfully!")}
-                >
-                  Update
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+      <AdminNav />
+      <div className="container mt-4">
+        <h2 className="mb-4 text-center text-md-start">Admin - Orders Management</h2>
+        
+        <div className="table-responsive">
+          <table className="table table-striped table-bordered">
+            <thead className="table-dark">
+              <tr>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.name}</td>
+                  <td>
+  <select
+    className="form-select status-select"
+    value={order.status}
+    onChange={(e) => handleStatusChange(e, order._id)}
+  >
+    <option value="Pending">Pending</option>
+    <option value="Processing">Processing</option>
+    <option value="Shipped">Shipped</option>
+    <option value="Delivered">Delivered</option>
+    <option value="Return Processing">Return Processing</option>
+    <option value="Cancelled">Cancelled</option>
+  </select>
+</td>
+                  <td>
+                    <button
+                      className="btn btn-sm btn-primary"
+                      onClick={() => alert("Order updated successfully!")}
+                    >
+                      Update
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }

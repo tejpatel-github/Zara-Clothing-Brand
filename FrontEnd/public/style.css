@@ -159,3 +159,78 @@
 }
 
 
+.status-select {
+  max-width: 150px;
+  min-width: 100px;
+}
+
+@media (max-width: 576px) {
+  .status-select {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+
+.feature-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.02);
+}
+
+.product-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive height for small devices */
+@media (max-width: 576px) {
+  .product-img {
+    height: 120px;
+  }
+}
+
+.main-card {
+  padding: 10px;
+  backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.feature-card-body {
+  padding: 10px 15px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  background-color: #1e1e1ed5;
+}
+
+
+
+.product-title {
+  font-weight: 600;
+}
+
+.product-price {
+  color: white;
+}
+
+/* Optional: Adjust card padding on mobile for more spacing */
+@media (max-width: 768px) {
+  .feature-card-body {
+    padding: 8px 12px;
+  }
+}
+

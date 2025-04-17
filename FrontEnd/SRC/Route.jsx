@@ -16,6 +16,7 @@ import Order from "./Components/Order.jsx";
 import Checkout from "./Components/Checkout.jsx";
 
 
+
 const NotFound = () => <h1>Error 404!</h1>; 
 
 function LinksSetup() {
@@ -25,17 +26,24 @@ function LinksSetup() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Register />} />
         <Route path="/AdminLogin" element={<AdminLogin/>} />
-        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/Store" element={<Product />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
-        <Route path="/AdminManage" element={<AdminManage />} />
-        <Route path="/AdminProduct" element={<AdminProduct/>} />
-        <Route path="/UpdateItem" element={<UpdateItem/>} />
-        <Route path="/AdminReturn" element={<ReturnOrderPage/>} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/wishlist" element= {<Wishlist/>} />
         <Route path="/Order" element={<Order/>} />
         <Route path="/checkout" element={<Checkout/>} />
+
+
+        {/* Admin side Route */}
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/AdminManage" element={<AdminManage />} />
+        <Route path="/AdminProduct" element={<AdminProduct/>} />
+        <Route path="/UpdateItem" element={<UpdateItem/>} />
+        <Route path="/AdminReturn" element={<ReturnOrderPage/>} />
+
+
+
+
 
 
         <Route path="*" element={<NotFound />} />

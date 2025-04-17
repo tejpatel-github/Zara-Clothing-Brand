@@ -7,6 +7,8 @@ import NavigationBar from "./Navbar.jsx";
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotData, setForgotData] = useState({ username: "", email: "", newPassword: "" });
 
   function loginToast() {
     toast.success("Welcome", { position: "top-right" });
@@ -14,6 +16,10 @@ const LoginSignup = () => {
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const forgotChangeHandler = (e) => {
+    setForgotData({ ...forgotData, [e.target.name]: e.target.value });
   };
 
   const validateForm = () => {
@@ -25,33 +31,27 @@ const LoginSignup = () => {
       toast.error("Email is required");
       return false;
     }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       toast.error("Invalid email format");
       return false;
     }
-    
     if (!formData.password.trim()) {
       toast.error("Password is required");
       return false;
     }
     return true;
   };
-  
 
   const login = async () => {
     if (!validateForm()) return;
     try {
       const response = await fetch("http://localhost:4000/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-
       if (data.success) {
         localStorage.setItem("auth-token", data.token);
         localStorage.setItem("user-email", formData.email);
@@ -68,22 +68,15 @@ const LoginSignup = () => {
     }
   };
 
-
-  
-
-
   const signup = async () => {
     if (!validateForm()) return;
     try {
       const response = await fetch("http://localhost:4000/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-
       if (data.success) {
         localStorage.setItem("auth-token", data.token);
         localStorage.setItem("user-email", formData.email);
@@ -98,56 +91,112 @@ const LoginSignup = () => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    const { name, email, newPassword } = forgotData;
+    if (!name || !email || !newPassword) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:4000/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(forgotData),
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast.success("Password updated successfully!");
+        setShowForgotModal(false);
+        setForgotData({ name: "", email: "", newPassword: "" });
+      } else {
+        toast.error(data.message || "Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      toast.error("Failed to reset password. Please try again.");
+    }
+  };
+
   return (
     <>
-    <NavigationBar/>
-    <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow-lg" style={{ width: "400px" }}>
-        <h2 className="text-center mb-4">{state}</h2>
-        <div className="mb-3">
-          {state === "Sign Up" && (
+      <NavigationBar />
+      <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="card p-4 shadow-lg" style={{ width: "400px" }}>
+          <h2 className="text-center mb-4">{state}</h2>
+          <div className="mb-3">
+            {state === "Sign Up" && (
+              <input
+                type="text"
+                className="form-control mb-2"
+                placeholder="Your name"
+                name="username"
+                value={formData.username}
+                onChange={changeHandler}
+              />
+            )}
             <input
-              type="text"
+              type="email"
               className="form-control mb-2"
-              placeholder="Your name"
-              name="username"
-              value={formData.username}
+              placeholder="Email address"
+              name="email"
+              value={formData.email}
+              onChange={changeHandler}
+              required
+            />
+            <input
+              type="password"
+              className="form-control mb-2"
+              placeholder="Password"
+              name="password"
+              value={formData.password}
               onChange={changeHandler}
             />
+          </div>
+
+          <button className="btn btn-primary w-100 mb-2" onClick={() => (state === "Login" ? login() : signup())}>
+            {state}
+          </button>
+
+
+          <p className="text-center">
+            {state === "Login" ? (
+              <>
+                Create an account?{" "}
+                <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Sign Up")}>
+                  Sign Up
+                </span>
+              </>
+            ) : (
+              <>
+                Already have an account?{" "}
+                <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Login")}>
+                  Login here
+                </span>
+              </>
+
+              
+            )}
+
+{state === "Login" && (
+            <p className="text-center">
+              <span
+                className="text-danger"
+                style={{ cursor: "pointer", fontSize: "0.9rem" }}
+                onClick={() => setShowForgotModal(true)}
+              >
+                Forgot Password?
+              </span>
+            </p>
           )}
-          <input
-            type="email"
-            className="form-control mb-2"
-            placeholder="Email address"
-            name="email"
-            value={formData.email}
-            onChange={changeHandler}
-            required
-          />
-          <input
-            type="password"
-            className="form-control mb-3"
-            placeholder="Password"
-            name="password"
-            value={formData.password}
-            onChange={changeHandler}
-          />
+          </p>
+
+          
         </div>
-
-        <button className="btn btn-primary w-100 mb-3" onClick={() => (state === "Login" ? login() : signup())}>
-          {state}
-        </button>
-
-        <p className="text-center">
-          {state === "Login" ? (
-            <>Create an account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Sign Up")}>Sign Up</span></>
-          ) : (
-            <>Already have an account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Login")}>Login here</span></>
-          )}
-        </p>
       </div>
+
+     
+
       <ToastContainer theme="dark" />
-    </div>
     </>
   );
 };

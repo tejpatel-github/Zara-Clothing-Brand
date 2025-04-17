@@ -200,19 +200,14 @@ function Store() {
                   </Dropdown>
                 </Form.Group>
                 <Button variant="dark" style={{ marginTop: "10px" }} onClick={handleAddToCart}>
-                  Add to Cart
+                  <i class="fas fa-cart-plus"></i>
                 </Button>
                 <Button variant="outline-dark" style={{ marginTop: "10px", marginLeft: "10px" }} onClick={handleAddToWishlist}>
-                  Add to Wishlist
+                  <i class="far fa-heart"></i>
                 </Button>
               </>
             )}
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Close
-            </Button>
-          </Modal.Footer>
         </Modal>
       </Container>
     </>

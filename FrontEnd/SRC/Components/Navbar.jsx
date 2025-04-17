@@ -54,10 +54,10 @@ function NavigationBar() {
             </li>
             <li className="nav-item">
               <a
-                className="nav-link btn btn-link"
+              className="nav-link"
                href="/Store"
               >
-                Store
+                STORE
               </a>
             </li>
             <li className="nav-item">

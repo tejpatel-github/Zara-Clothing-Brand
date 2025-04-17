@@ -11,7 +11,7 @@ const bcrypt = require("bcryptjs");
 const app = express();
 
 mongoose.connect(
-  "mongodb+srv://tpatel9817:Tsp%400852@cluster0.brcjm0n.mongodb.net/Zara"
+  ""
 );
 
 
@@ -147,6 +147,20 @@ app.post("/signup", async (req, res) => {
 
 
 
+
+app.post("/forgot-password", async (req, res) => {
+  const { name, email, newPassword } = req.body;
+  const user = await Users.findOne({ name, email });
+  if (!user) {
+    return res.json({ success: false, message: "User not found" });
+  }
+  user.password = newPassword;
+  await user.save();
+  res.json({ success: true });
+});
+
+
+
 // Admin Side API
 const Admin = mongoose.model("Admin", {
   name: {
@@ -256,6 +270,10 @@ app.post("/AdminSignup", async (req, res) => {
   success = true;
   res.json({ success, token });
 });
+
+
+
+
 
 
 
@@ -594,7 +612,8 @@ app.post('/api/orders', async (req, res) => {
       cardNumber,
       cardCVV,
       cardExpiry,
-      cardHolderName
+      cardHolderName,
+      status : "Pending",
     });
     await newOrder.save();
     res.status(201).json(newOrder);
@@ -643,7 +662,7 @@ const ReturnOrder = mongoose.model('ReturnOrder', returnOrderSchema);
 app.post('/api/return', async (req, res) => {
   const { orderId, productName, returnRequested, userEmail, returnReason } = req.body;
   try {
-    const newReturnOrder = new ReturnOrder({ orderId,productName, userEmail, returnRequested, returnReason });
+    const newReturnOrder = new ReturnOrder({ orderId,productName, userEmail, returnRequested, returnReason, status: "Pending" });
     await newReturnOrder.save();
     res.status(201).json({ message: 'Return request created successfully', returnOrder: newReturnOrder });
   } catch (error) {
@@ -856,3 +875,6 @@ app.get('/user/:email', async (req, res) => {
     console.log("Error fetching user:", error);
   }
 });
+
+
+

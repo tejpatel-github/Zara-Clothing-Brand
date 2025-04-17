@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const AdminLogin = () => {
   const [state, setState] = useState("Admin Login");
-  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  function loginToast() {
-    toast.success("Welcome", { position: "top-right" });
-  }
+  const navigate = useNavigate();
+
+  const loginToast = () => {
+    toast.success("Welcome Admin!", { position: "top-right" });
+  };
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,22 +32,23 @@ const AdminLogin = () => {
       return false;
     }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-          toast.error("Invalid email format");
-          return false;
-        }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Invalid email format");
+      return false;
+    }
 
-        
     if (!formData.password.trim()) {
       toast.error("Password is required");
       return false;
     }
+
     return true;
   };
 
   const login = async () => {
     if (!validateForm()) return;
+
     try {
       const response = await fetch("http://localhost:4000/AdminLogin", {
         method: "POST",
@@ -49,26 +57,26 @@ const AdminLogin = () => {
         },
         body: JSON.stringify(formData),
       });
-      const data = await response.json();
 
-      if (data.success) {
-        localStorage.setItem("auth-token", data.token);
+      const Admindata = await response.json();
+
+      if (Admindata.success) {
+        localStorage.setItem("auth-token", Admindata.token);
         localStorage.setItem("user-email", formData.email);
         loginToast();
-        setTimeout(() => {
-          window.location.replace("/admin");
-        }, 2000);
+        setTimeout(() => navigate("/admin"), 1500);
       } else {
-        toast.error(data.errors);
+        toast.error(Admindata.errors || "Login failed");
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("Failed to login. Please try again.");
+      toast.error("Login failed. Try again.");
     }
   };
 
   const signup = async () => {
     if (!validateForm()) return;
+
     try {
       const response = await fetch("http://localhost:4000/AdminSignup", {
         method: "POST",
@@ -77,19 +85,20 @@ const AdminLogin = () => {
         },
         body: JSON.stringify(formData),
       });
-      const data = await response.json();
 
-      if (data.success) {
-        localStorage.setItem("auth-token", data.token);
+      const Admindata = await response.json();
+
+      if (Admindata.success) {
+        localStorage.setItem("auth-token", Admindata.token);
         localStorage.setItem("user-email", formData.email);
         loginToast();
-        window.location.replace("/admin");
+        setTimeout(() => navigate("/admin"), 1500);
       } else {
-        toast.error(data.errors);
+        toast.error(Admindata.errors || "Signup failed");
       }
     } catch (error) {
       console.error("Signup error:", error);
-      toast.error("Failed to signup. Please try again.");
+      toast.error("Signup failed. Try again.");
     }
   };
 
@@ -97,6 +106,7 @@ const AdminLogin = () => {
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 shadow-lg" style={{ width: "400px" }}>
         <h2 className="text-center mb-4">{state}</h2>
+
         <div className="mb-3">
           {state === "Admin Sign Up" && (
             <input
@@ -126,15 +136,36 @@ const AdminLogin = () => {
           />
         </div>
 
-
-        <button className="btn btn-primary w-100 mb-3" onClick={() => (state === "Admin Login" ? login() : signup())}>
+        <button
+          className="btn btn-primary w-100 mb-3"
+          onClick={() => (state === "Admin Login" ? login() : signup())}
+        >
           {state === "Admin Login" ? "Login" : "Sign Up"}
         </button>
+
         <p className="text-center">
           {state === "Admin Login" ? (
-            <>Create an Admin account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Admin Sign Up")}>Sign Up</span></>
+            <>
+              Create an Admin account?{" "}
+              <span
+                className="text-primary"
+                style={{ cursor: "pointer" }}
+                onClick={() => setState("Admin Sign Up")}
+              >
+                Sign Up
+              </span>
+            </>
           ) : (
-            <>Already have an Admin account? <span className="text-primary" style={{ cursor: "pointer" }} onClick={() => setState("Admin Login")}>Login here</span></>
+            <>
+              Already have an Admin account?{" "}
+              <span
+                className="text-primary"
+                style={{ cursor: "pointer" }}
+                onClick={() => setState("Admin Login")}
+              >
+                Login here
+              </span>
+            </>
           )}
         </p>
       </div>

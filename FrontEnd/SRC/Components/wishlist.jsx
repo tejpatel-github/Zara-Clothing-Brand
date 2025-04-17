@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Image, Alert } from 'react-bootstrap
 import axios from 'axios';
 import { Buffer } from 'buffer';
 import NavigationBar from './Navbar.jsx';
+import Footer from './footer.jsx';
 
 function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -78,7 +79,7 @@ function Wishlist() {
   return (
     <>
       <NavigationBar />
-      <Container className="mt-4">
+      <Container className="mt-4" style={{height: "75vh"}}>
         {error && <Alert variant="danger">{error}</Alert>}
         <h2 className="text-center mb-4">My Wishlist</h2>
 
@@ -124,6 +125,7 @@ function Wishlist() {
           </Row>
         )}
       </Container>
+      <Footer/>
     </>
   );
 }
