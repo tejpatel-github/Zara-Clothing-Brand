@@ -191,7 +191,7 @@ const LoginSignup = () => {
           )}
           </p>
 
-         <Link to="/adminlogin" className="link-warning">Admin Login</Link>
+         <Link to="/adminlogin" className="link-warning text-center">Admin Login</Link>
 
           
         </div>
