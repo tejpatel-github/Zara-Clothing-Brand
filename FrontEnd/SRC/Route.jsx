@@ -25,7 +25,7 @@ function LinksSetup() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Register />} />
-        <Route path="/AdminLogin" element={<AdminLogin/>} />
+        <Route path="/adminlogin" element={<AdminLogin/>} />
         <Route path="/Store" element={<Product />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
@@ -36,10 +36,10 @@ function LinksSetup() {
 
         {/* Admin side Route */}
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/AdminManage" element={<AdminManage />} />
-        <Route path="/AdminProduct" element={<AdminProduct/>} />
-        <Route path="/UpdateItem" element={<UpdateItem/>} />
-        <Route path="/AdminReturn" element={<ReturnOrderPage/>} />
+        <Route path="/adminmanage" element={<AdminManage />} />
+        <Route path="/adminproduct" element={<AdminProduct/>} />
+        <Route path="/updateItem" element={<UpdateItem/>} />
+        <Route path="/adminreturn" element={<ReturnOrderPage/>} />
 
 
 
