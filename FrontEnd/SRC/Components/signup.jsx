@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavigationBar from "./Navbar.jsx";
+import { Link } from "react-router-dom";
 
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
@@ -190,7 +191,7 @@ const LoginSignup = () => {
           )}
           </p>
 
-          <a href="adminlogin" className="link-warning">Admin Login</a>
+         <Link to="/adminlogin" className="link-warning">Admin Login</Link>
 
           
         </div>
