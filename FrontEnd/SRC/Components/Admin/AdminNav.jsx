@@ -48,7 +48,7 @@ function AdminNav() {
             <li className="nav-item">
               <button
                 className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/admin")}
+                onClick={() => checkAuthAndNavigate("/Admin")}
               >
                 Dashboard
               </button>
