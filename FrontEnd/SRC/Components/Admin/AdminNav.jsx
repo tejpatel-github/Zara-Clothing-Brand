@@ -18,7 +18,7 @@ function AdminNav() {
       navigate(path);
     } else {
       alert("Please login first!");
-      navigate("/Adminlogin");
+      navigate("/adminlogin");
     }
   };
 
@@ -56,7 +56,7 @@ function AdminNav() {
             <li className="nav-item">
               <button
                 className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/AdminManage")}
+                onClick={() => checkAuthAndNavigate("/adminmanage")}
               >
                 Manage
               </button>
@@ -64,7 +64,7 @@ function AdminNav() {
             <li className="nav-item">
               <button
                 className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/AdminProduct")}
+                onClick={() => checkAuthAndNavigate("/adminproduct")}
               >
                 Product
               </button>
@@ -72,7 +72,7 @@ function AdminNav() {
             <li className="nav-item">
               <button
                 className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/AdminReturn")}
+                onClick={() => checkAuthAndNavigate("/adminreturn")}
               >
                 Return Orders
               </button>
