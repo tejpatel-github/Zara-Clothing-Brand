@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "./Assets/logo.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,6 +7,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function AdminNav() {
   const navigate = useNavigate();
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
@@ -23,8 +24,7 @@ function AdminNav() {
   };
 
   const toggleNavbar = () => {
-    const navbar = document.getElementById("navbarNav");
-    navbar.classList.toggle("show");
+    setIsNavbarOpen(!isNavbarOpen);
   };
 
   return (
@@ -36,44 +36,32 @@ function AdminNav() {
         <button
           className="navbar-toggler"
           type="button"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
           onClick={toggleNavbar}
+          aria-controls="navbarNav"
+          aria-expanded={isNavbarOpen}
+          aria-label="Toggle navigation"
         >
           <i className="fas fa-bars"></i>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className={`collapse navbar-collapse ${isNavbarOpen ? "show" : ""}`} id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <button
-                className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/Admin")}
-              >
+              <button className="btn btn-link nav-link" onClick={() => checkAuthAndNavigate("/Admin")}>
                 Dashboard
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/adminmanage")}
-              >
+              <button className="btn btn-link nav-link" onClick={() => checkAuthAndNavigate("/adminmanage")}>
                 Manage
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/adminproduct")}
-              >
+              <button className="btn btn-link nav-link" onClick={() => checkAuthAndNavigate("/adminproduct")}>
                 Product
               </button>
             </li>
             <li className="nav-item">
-              <button
-                className="btn btn-link nav-link"
-                onClick={() => checkAuthAndNavigate("/adminreturn")}
-              >
+              <button className="btn btn-link nav-link" onClick={() => checkAuthAndNavigate("/adminreturn")}>
                 Return Orders
               </button>
             </li>
