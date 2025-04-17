@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";  // Import Bootstrap CSS
 import "bootstrap/dist/js/bootstrap.bundle.min.js";  // Ensure Bootstrap JS is loaded
 import Footer from "./footer.jsx";
 import FeatureProduct from "./FetureProduct.jsx";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -36,7 +37,9 @@ function Home() {
       </div>
 
       <div className="main-header">
-          <a className="btn btn-info" href="/Store">Start Shopping <i class="fas fa-arrow-right"></i> </a>
+          <Link to="/Store" className="btn btn-info">
+  Start Shopping <i className="fas fa-arrow-right"></i>
+</Link>
       </div>
 
       <div className="home-ad">
