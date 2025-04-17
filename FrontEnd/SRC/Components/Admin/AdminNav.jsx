@@ -84,7 +84,7 @@ function AdminNav() {
                 Logout
               </button>
             ) : (
-              <Link to="/Adminlogin" className="btn btn-outline-primary">
+              <Link to="/adminlogin" className="btn btn-outline-primary">
                 Login
               </Link>
             )}
