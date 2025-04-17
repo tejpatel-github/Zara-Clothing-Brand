@@ -20,7 +20,7 @@ mongoose.connect(
 
 // app.use(cors());
 app.use(cors({
-  origin: 'http://localhost:5000',
+  origin: ' https://zara-clothing-brand.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));

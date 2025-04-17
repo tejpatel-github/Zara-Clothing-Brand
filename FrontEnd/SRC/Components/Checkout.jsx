@@ -25,7 +25,7 @@ function Checkout() {
 
   const deleteCartItems = async (email) => {
     try {
-      const response = await axios.delete("http://localhost:4000/api/cart", {
+      const response = await axios.delete("https://zara-clothing-brand-backend.onrender.com/api/cart", {
         data: { email },
       });
       console.log(response.data.message);
@@ -122,7 +122,7 @@ function Checkout() {
         ...formData,
       };
 
-      await axios.post("http://localhost:4000/api/orders", orderData);
+      await axios.post("https://zara-clothing-brand-backend.onrender.com/api/orders", orderData);
       const mail = localStorage.getItem("user-email");
       deleteCartItems(mail);
       alert("Order placed successfully!");

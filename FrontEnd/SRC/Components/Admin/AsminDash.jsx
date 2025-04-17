@@ -16,7 +16,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/orders'); 
+        const response = await axios.get('https://zara-clothing-brand-backend.onrender.com/api/orders'); 
         console.log(response.data); 
         setOrders(response.data);
       } catch (error) {
@@ -38,7 +38,7 @@ const AdminDashboard = () => {
     });
     setOrders(updatedOrders);
     try {
-      await axios.put(`http://localhost:4000/api/orders/${orderId}`, { status: updatedStatus });
+      await axios.put(`https://zara-clothing-brand-backend.onrender.com/api/orders/${orderId}`, { status: updatedStatus });
       alert("Update successfully");
     } catch (error) {
       console.error("There was an error updating the order status!", error);
@@ -48,23 +48,23 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const revenueResponse = await fetch('http://localhost:4000/api/total-revenue');
+        const revenueResponse = await fetch('https://zara-clothing-brand-backend.onrender.com/api/total-revenue');
         const revenueData = await revenueResponse.json();
         setTotalRevenue(revenueData.totalRevenue);
 
-        const ordersResponse = await fetch('http://localhost:4000/api/total-orders');
+        const ordersResponse = await fetch('https://zara-clothing-brand-backend.onrender.com/api/total-orders');
         const ordersData = await ordersResponse.json();
         setTotalOrders(ordersData.totalOrders);
 
-        const returnsResponse = await fetch('http://localhost:4000/api/total-returns');
+        const returnsResponse = await fetch('https://zara-clothing-brand-backend.onrender.com/api/total-returns');
         const returnsData = await returnsResponse.json();
         setTotalReturns(returnsData.totalReturns);
 
-        const usersResponse = await fetch('http://localhost:4000/api/total-users');
+        const usersResponse = await fetch('https://zara-clothing-brand-backend.onrender.com/api/total-users');
         const usersData = await usersResponse.json();
         setTotalUsers(usersData.totalUsers);
 
-        const recentOrdersResponse = await fetch('http://localhost:4000/api/orders');
+        const recentOrdersResponse = await fetch('https://zara-clothing-brand-backend.onrender.com/api/orders');
         const recentOrdersData = await recentOrdersResponse.json();
         setRecentOrders(recentOrdersData);
       } catch (err) {

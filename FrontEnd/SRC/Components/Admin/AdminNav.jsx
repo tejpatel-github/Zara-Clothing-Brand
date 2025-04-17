@@ -33,7 +33,7 @@ function AdminNav() {
   // Handle Admin Login
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/AdminLogin", {
+      const response = await axios.post("https://zara-clothing-brand-backend.onrender.com/AdminLogin", {
         email,
         password
       });

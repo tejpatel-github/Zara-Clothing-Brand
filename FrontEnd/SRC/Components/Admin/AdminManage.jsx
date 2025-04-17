@@ -8,7 +8,7 @@ function AdminManage() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/orders");
+        const response = await axios.get("https://zara-clothing-brand-backend.onrender.com/api/orders");
         console.log(response.data);
         setOrders(response.data);
       } catch (error) {
@@ -29,7 +29,7 @@ function AdminManage() {
     });
     setOrders(updatedOrders);
     try {
-      await axios.put(`http://localhost:4000/api/orders/${orderId}`, { status: updatedStatus });
+      await axios.put(`https://zara-clothing-brand-backend.onrender.com/api/orders/${orderId}`, { status: updatedStatus });
       alert("Update successfully");
     } catch (error) {
       console.error("There was an error updating the order status!", error);

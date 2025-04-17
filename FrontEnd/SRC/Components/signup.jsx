@@ -46,7 +46,7 @@ const LoginSignup = () => {
   const login = async () => {
     if (!validateForm()) return;
     try {
-      const response = await fetch("http://localhost:4000/login", {
+      const response = await fetch("https://zara-clothing-brand-backend.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -71,7 +71,7 @@ const LoginSignup = () => {
   const signup = async () => {
     if (!validateForm()) return;
     try {
-      const response = await fetch("http://localhost:4000/signup", {
+      const response = await fetch("https://zara-clothing-brand-backend.onrender.com/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -98,7 +98,7 @@ const LoginSignup = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:4000/forgot-password", {
+      const response = await fetch("https://zara-clothing-brand-backend.onrender.com/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(forgotData),
@@ -194,7 +194,53 @@ const LoginSignup = () => {
         </div>
       </div>
 
-     
+      {/* Forgot Password Modal */}
+      {showForgotModal && (
+        <div className="modal d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Reset Password</h5>
+                <button type="button" className="btn-close" onClick={() => setShowForgotModal(false)}></button>
+              </div>
+              <div className="modal-body">
+                <input
+                  type="text"
+                  className="form-control mb-2"
+                  placeholder="Username"
+                  name="name"
+                  value={forgotData.name}
+                  onChange={forgotChangeHandler}
+                />
+                <input
+                  type="email"
+                  className="form-control mb-2"
+                  placeholder="Email address"
+                  name="email"
+                  value={forgotData.email}
+                  onChange={forgotChangeHandler}
+                />
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="New password"
+                  name="newPassword"
+                  value={forgotData.newPassword}
+                  onChange={forgotChangeHandler}
+                />
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" onClick={() => setShowForgotModal(false)}>
+                  Cancel
+                </button>
+                <button className="btn btn-primary" onClick={handleForgotPassword}>
+                  Update Password
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <ToastContainer theme="dark" />
     </>

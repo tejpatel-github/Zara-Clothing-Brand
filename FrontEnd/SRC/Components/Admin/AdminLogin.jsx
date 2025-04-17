@@ -50,7 +50,7 @@ const AdminLogin = () => {
     if (!validateForm()) return;
 
     try {
-      const response = await fetch("http://localhost:4000/AdminLogin", {
+      const response = await fetch("https://zara-clothing-brand-backend.onrender.com/AdminLogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +78,7 @@ const AdminLogin = () => {
     if (!validateForm()) return;
 
     try {
-      const response = await fetch("http://localhost:4000/AdminSignup", {
+      const response = await fetch("https://zara-clothing-brand-backend.onrender.com/AdminSignup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

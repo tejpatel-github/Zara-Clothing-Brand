@@ -36,7 +36,7 @@ function Cart() {
 
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/cart?email=${storedEmail}`);
+        const response = await axios.get(`https://zara-clothing-brand-backend.onrender.com/api/cart?email=${storedEmail}`);
         const items = Array.isArray(response.data) ? response.data : [response.data];
         setCartItems(items);
       } catch (error) {
@@ -52,7 +52,7 @@ function Cart() {
     if (!checkLogin() || quantity < 1) return;
     try {
       const updatedItem = { ...item, quantity };
-      await axios.put(`http://localhost:4000/api/cart/${item._id}`, updatedItem);
+      await axios.put(`https://zara-clothing-brand-backend.onrender.com/api/cart/${item._id}`, updatedItem);
       setCartItems(cartItems.map(cartItem => cartItem._id === item._id ? updatedItem : cartItem));
     } catch (error) {
       console.error("There was an error updating the cart item!", error.response || error.message);
@@ -63,7 +63,7 @@ function Cart() {
   const handleRemoveItem = async (item) => {
     if (!checkLogin()) return;
     try {
-      await axios.delete(`http://localhost:4000/api/cart/${item._id}`);
+      await axios.delete(`https://zara-clothing-brand-backend.onrender.com/api/cart/${item._id}`);
       setCartItems(cartItems.filter(cartItem => cartItem._id !== item._id));
     } catch (error) {
       console.error("There was an error removing the cart item!", error.response || error.message);

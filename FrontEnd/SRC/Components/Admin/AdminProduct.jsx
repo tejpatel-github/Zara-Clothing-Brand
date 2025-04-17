@@ -17,7 +17,7 @@ const ItemList = () => {
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/items');
+      const response = await axios.get('https://zara-clothing-brand-backend.onrender.com/api/items');
       setItems(response.data);
     } catch (error) {
       console.error('Error fetching items:', error);
@@ -26,7 +26,7 @@ const ItemList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/items/${id}`);
+      await axios.delete(`https://zara-clothing-brand-backend.onrender.com/api/items/${id}`);
       fetchItems();
     } catch (error) {
       console.error('Error deleting item:', error);
@@ -55,7 +55,7 @@ const ItemList = () => {
     const formData = new FormData(e.target);
 
     try {
-      await axios.post('http://localhost:4000/api/upload', formData);
+      await axios.post('https://zara-clothing-brand-backend.onrender.com/api/upload', formData);
       fetchItems();
       handleCloseModal();
     } catch (error) {

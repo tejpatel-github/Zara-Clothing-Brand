@@ -14,7 +14,7 @@ const Order = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/order?userEmail=${email}`);
+        const response = await axios.get(`https://zara-clothing-brand-backend.onrender.com/api/order?userEmail=${email}`);
         setOrders(response.data);
       } catch (err) {
         setError(err.message || 'Failed to fetch orders.');
@@ -32,7 +32,7 @@ const Order = () => {
     try {
       const order = orders.find(order => order._id === id);
       const returnRequested = !order.returnRequested;
-      await axios.put(`http://localhost:4000/api/order/${id}/return`, {
+      await axios.put(`https://zara-clothing-brand-backend.onrender.com/api/order/${id}/return`, {
         returnRequested,
         returnReason: order.returnReason,
       });
@@ -51,7 +51,7 @@ const Order = () => {
 
   const handleSubmitReturn = async (id) => {
     try {
-      await axios.put(`http://localhost:4000/api/order/${id}/return`, {
+      await axios.put(`https://zara-clothing-brand-backend.onrender.com/api/order/${id}/return`, {
         returnRequested: true,
         returnReason: reason, // Submit reason
       });

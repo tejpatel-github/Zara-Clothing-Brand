@@ -18,7 +18,7 @@ function Wishlist() {
       }
 
       try {
-        const response = await axios.get(`http://localhost:4000/api/wishlist`, {
+        const response = await axios.get(`https://zara-clothing-brand-backend.onrender.com/api/wishlist`, {
           params: { email: storedEmail }
         });
 
@@ -39,7 +39,7 @@ function Wishlist() {
 
   const handleRemoveFromWishlist = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:4000/api/wishlist/${itemId}`);
+      await axios.delete(`https://zara-clothing-brand-backend.onrender.com/api/wishlist/${itemId}`);
       setWishlistItems(wishlistItems.filter(item => item._id !== itemId));
       alert("Item removed from wishlist!");
     } catch (error) {
@@ -67,7 +67,7 @@ function Wishlist() {
     };
 
     try {
-      await axios.post('http://localhost:4000/api/cart', cartItem);
+      await axios.post('https://zara-clothing-brand-backend.onrender.com/api/cart', cartItem);
       alert('Item moved to cart successfully!');
       handleRemoveFromWishlist(item._id);
     } catch (error) {

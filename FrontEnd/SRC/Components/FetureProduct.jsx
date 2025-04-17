@@ -8,7 +8,7 @@ export default function FeatureProduct() {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/items");
+      const response = await axios.get("https://zara-clothing-brand-backend.onrender.com/api/items");
       if (Array.isArray(response.data)) {
         const formatted = response.data.map((item) => {
           const base64Image = Buffer.from(item.image.data).toString("base64");
