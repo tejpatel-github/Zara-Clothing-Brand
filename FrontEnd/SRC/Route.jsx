@@ -35,7 +35,7 @@ function LinksSetup() {
 
 
         {/* Admin side Route */}
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/Admin" element={<AdminDashboard />} />
         <Route path="/adminmanage" element={<AdminManage />} />
         <Route path="/adminproduct" element={<AdminProduct/>} />
         <Route path="/updateItem" element={<UpdateItem/>} />
